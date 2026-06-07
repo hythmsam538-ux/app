@@ -1,0 +1,30 @@
+{
+  "users": {
+    "dr-hitham": {
+      "uid": "oLPppTSISrZmbpuG8a8KxzasAZg2",
+      "email": "dr.hitham@a-different.com",
+      "fullName": "Dr / Hitham Essam",
+      "title": "Faculty of Medicine",
+      "bio": "طبيب بشري - جامعة القاهرة",
+      "quote": "𝑌𝑜𝑢 𝑎𝑟𝑒 𝑤ℎ𝑎𝑡 𝑦𝑜𝑢 𝑡ℎ𝑖𝑛𝑘",
+      "phone": "+201095951870",
+      "profileImage": "IMAG.jpg",
+      "socialLinks": {
+        "facebook": "https://www.facebook.com/share/1BfpfxLXGC/",
+        "instagram": "https://www.instagram.com/dr_hith_oom",
+        "whatsapp": "https://wa.me/201095951870",
+        "telegram": "https://t.me/Dr_hith_oom",
+        "tiktok": "https://www.tiktok.com/@dr.hithoom7",
+        "snapchat": "https://www.snapchat.com/add/dr_hitham?share_id=6z1l80Kf8Mk&locale=ar-AA_",
+        "twitter": "https://x.com/dr_hitham_"
+      },
+      "customLink": {
+        "url": "https://a-different.com",
+        "title": "Founder - Different Website"
+      }
+    }
+  },
+  "visitCounts": {
+    "dr-hitham": 0
+  }
+}

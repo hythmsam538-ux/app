@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تسجيل الدخول - منصة العملاء</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root {
+      --main-color: #00b894;
+      --bg-dark: linear-gradient(135deg, #000000, #003d2e, #001f17);
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg-dark);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .login-card {
+      background: rgba(27, 27, 27, 0.9);
+      backdrop-filter: blur(10px);
+      padding: 40px 30px;
+      border-radius: 28px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid #00b89433;
+      box-shadow: 0 0 40px rgba(0,184,148,0.2);
+    }
+    .login-card h1 {
+      color: #00b894;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+    .login-card p {
+      color: #aaa;
+      margin-bottom: 30px;
+    }
+    .input-group {
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid #00b89455;
+      border-radius: 16px;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      transition: 0.3s;
+    }
+    .input-group input:focus {
+      border-color: #00b894;
+      box-shadow: 0 0 12px #00b894;
+    }
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #00b894;
+      font-weight: 500;
+    }
+    .input-group label i {
+      margin-left: 8px;
+    }
+    button {
+      width: 100%;
+      padding: 14px;
+      background: #00b894;
+      border: none;
+      border-radius: 40px;
+      color: white;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+    button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 20px #00b894;
+    }
+    .error-msg {
+      color: #ff6b6b;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .success-msg {
+      color: #00b894;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    footer {
+      margin-top: 25px;
+      font-size: 12px;
+      color: #666;
+    }
+    .back-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #00b894;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+<div class="login-card">
+  <i class="fas fa-user-md" style="font-size: 50px; color: #00b894; margin-bottom: 15px;"></i>
+  <h1>مرحباً بعودتك</h1>
+  <p>سجل دخولك لتعديل بيانات صفحتك الشخصية</p>
+  
+  <div class="input-group">
+    <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
+    <input type="email" id="login-email" placeholder="example@domain.com">
+  </div>
+  
+  <div class="input-group">
+    <label><i class="fas fa-lock"></i> كلمة المرور</label>
+    <input type="password" id="login-password" placeholder="********">
+  </div>
+  
+  <button id="login-btn"><i class="fas fa-sign-in-alt"></i> دخول</button>
+  
+  <div id="error-msg" class="error-msg"></div>
+  <div id="success-msg" class="success-msg"></div>
+  
+  <a href="https://a-different.com" class="back-link"><i class="fas fa-arrow-right"></i> العودة إلى الصفحة الرئيسية</a>
+  
+  <footer>منصة العملاء الذكية © 2025</footer>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDSla_cxcu-w0da5XEggB5Yaik-no4j90s",
+  authDomain: "dashboardc-9b0bc.firebaseapp.com",
+  databaseURL: "https://dashboardc-9b0bc-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "dashboardc-9b0bc",
+  storageBucket: "dashboardc-9b0bc.firebasestorage.app",
+  messagingSenderId: "297957699927",
+  appId: "1:297957699927:web:5b4f1db24e415494fcce12"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getDatabase(app);
+
+const loginBtn = document.getElementById('login-btn');
+const emailInput = document.getElementById('login-email');
+const passwordInput = document.getElementById('login-password');
+const errorMsg = document.getElementById('error-msg');
+const successMsg = document.getElementById('success-msg');
+
+loginBtn.addEventListener('click', async () => {
+  const email = emailInput.value.trim();
+  const password = passwordInput.value;
+  
+  errorMsg.textContent = '';
+  successMsg.textContent = '';
+  
+  if (!email || !password) {
+    errorMsg.textContent = '❌ الرجاء إدخال البريد الإلكتروني وكلمة المرور';
+    return;
+  }
+  
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const uid = userCredential.user.uid;
+    
+    // جلب اسم المستخدم (username) من قاعدة البيانات
+    const usersRef = ref(db, 'users');
+    const snapshot = await get(usersRef);
+    
+    let username = null;
+    if (snapshot.exists()) {
+      const users = snapshot.val();
+      for (const [key, value] of Object.entries(users)) {
+        if (value.uid === uid || value.email === email) {
+          username = key;
+          break;
+        }
+      }
+    }
+    
+    if (username) {
+      // حفظ بيانات الدخول في localStorage
+      localStorage.setItem('currentClient', JSON.stringify({
+        uid: uid,
+        username: username,
+        email: email
+      }));
+      
+      successMsg.textContent = '✅ جاري التحويل إلى لوحة التحكم...';
+      
+      setTimeout(() => {
+        window.location.href = `dashboard.html?username=${username}`;
+      }, 1000);
+    } else {
+      errorMsg.textContent = '❌ لا توجد صفحة مرتبطة بهذا الحساب';
+    }
+    
+  } catch (error) {
+    console.error(error);
+    if (error.code === 'auth/user-not-found') {
+      errorMsg.textContent = '❌ هذا البريد غير مسجل في النظام';
+    } else if (error.code === 'auth/wrong-password') {
+      errorMsg.textContent = '❌ كلمة المرور غير صحيحة';
+    } else {
+      errorMsg.textContent = '❌ حدث خطأ، حاول مرة أخرى';
+    }
+  }
+});
+</script>
+
+</body>
+</html>
